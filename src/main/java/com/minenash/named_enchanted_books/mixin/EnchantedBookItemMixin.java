@@ -4,8 +4,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -22,11 +22,11 @@ public class EnchantedBookItemMixin extends Item {
     @Override
     public Text getName(ItemStack stack) {
 
-        ListTag list = EnchantedBookItem.getEnchantmentTag(stack);
+        NbtList list = EnchantedBookItem.getEnchantmentNbt(stack);
         if (list.isEmpty())
             return super.getName(stack);
 
-        CompoundTag tag = list.getCompound(0);
+        NbtCompound tag = list.getCompound(0);
         Enchantment enchantment = Registry.ENCHANTMENT.get(Identifier.tryParse(tag.getString("id")));
 
         if (enchantment != null) {
